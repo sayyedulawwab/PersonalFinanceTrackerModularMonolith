@@ -16,11 +16,6 @@ public sealed class GetAllUserQueryHandler(IUserRepository userRepository)
     {
         IReadOnlyList<User> users = await userRepository.GetAllAsync(cancellationToken);
 
-        if (users is null || users.Count == 0)
-        {
-            return Result.Failure<IReadOnlyList<UserResponse>>(UserErrors.NotFound);
-        }
-
         var userResponse = users.Select(user => new UserResponse(
             user.Id,
             user.FirstName,
