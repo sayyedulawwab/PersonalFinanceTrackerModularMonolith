@@ -6,20 +6,10 @@ services:
             - POSTGRES_DB=financeDB
             - POSTGRES_USER=postgres
             - POSTGRES_PASSWORD=postgres
-        volumes:
-            - ./.containers/database/:/var/lib/postgresql/data
         networks:
             - app-network
         ports:
             - 5432:5432
-    cache-redis:
-        image: redis:latest
-        container_name:  cache-redis
-        restart: always
-        networks:
-            - app-network
-        ports:
-            - 6379:6379
 
     logging-seq:
         image: datalust/seq:latest
@@ -40,13 +30,14 @@ services:
             dockerfile: src/API/Dockerfile
         depends_on:
             - database-postgres
-            - cache-redis
             - logging-seq
         networks:
             - app-network
         ports:
             - "5000:8080"
-            - "5001:8081"
+            - "5001:8082"
+        environment:
+            - DOTNET_ENVIRONMENT=Development
 networks:
   app-network:
     driver: bridge

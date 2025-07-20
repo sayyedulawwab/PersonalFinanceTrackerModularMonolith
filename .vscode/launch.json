@@ -1,0 +1,20 @@
+{
+  "configurations": [
+    {
+      "name": "Attach to Docker .NET Core App",
+      "type": "coreclr",
+      "request": "attach",
+      "processName": "dotnet",
+      "pipeTransport": {
+        "pipeProgram": "docker",
+        "pipeArgs": [ "exec", "-i", "finance-tracker-api" ],
+        "debuggerPath": "/root/.vs-debugger/vsdbg",
+        "quoteArgs": false
+      },
+      "sourceFileMap": {
+        "/src": "${workspaceFolder}/src"
+      },
+      "justMyCode": false
+    }
+  ]
+}

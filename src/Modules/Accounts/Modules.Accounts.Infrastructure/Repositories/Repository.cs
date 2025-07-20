@@ -1,12 +1,12 @@
 ﻿using Common.Domain.Abstractions;
 using Microsoft.EntityFrameworkCore;
 
-namespace Modules.Users.Infrastructure.Repositories;
+namespace Modules.Accounts.Infrastructure.Repositories;
 
-internal abstract class Repository<TEntity>(UsersDbContext dbContext)
+internal abstract class Repository<TEntity>(AccountsDbContext dbContext)
     where TEntity : Entity<Guid>
 {
-    protected readonly UsersDbContext DbContext = dbContext;
+    protected readonly AccountsDbContext DbContext = dbContext;
 
     public virtual async Task<IReadOnlyList<TEntity>> GetAllAsync(CancellationToken cancellationToken = default)
     {

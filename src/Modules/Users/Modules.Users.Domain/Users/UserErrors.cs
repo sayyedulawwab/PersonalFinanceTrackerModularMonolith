@@ -8,7 +8,7 @@ public static class UserErrors
         "User with provided email already exists");
 
     public static readonly Error NotFound = Error.NotFound(
-        "User.Found",
+        "User.NotFound",
         "The user with the specified identifier was not found");
 
     public static readonly Error InvalidCredentials = Error.Conflict(

@@ -1,22 +1,32 @@
-using System.Reflection;
 using API.Extensions;
 using Asp.Versioning;
 using Common.Infrastructure;
-using Microsoft.Extensions.Configuration;
 using Microsoft.OpenApi.Models;
+using Modules.Accounts.Infrastructure;
+using Modules.Users.Infrastructure;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 using Serilog;
 using Serilog.Sinks.OpenTelemetry;
+using System.Reflection;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-_ = Common.Infrastructure.AssemblyReference.Assembly;
-_ = Modules.Users.Application.AssemblyReference.Assembly;
-_ = Modules.Users.Infrastructure.AssemblyReference.Assembly;
 
-Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();
+Assembly[] moduleAssemblies = new[]
+{
+    typeof(CommonModuleInstaller).Assembly,
+    typeof(UsersModuleInstaller).Assembly,
+    typeof(AccountsModuleInstaller).Assembly
+};
+
+var assemblies = AppDomain.CurrentDomain
+    .GetAssemblies()
+    .Concat(moduleAssemblies)
+    .Distinct()
+    .ToList();
+
 
 var installers = assemblies
             .SelectMany(a => a.GetTypes())
@@ -26,6 +36,7 @@ var installers = assemblies
 
 foreach (IModuleInstaller installer in installers)
 {
+    Console.WriteLine($"Installing module: {installer.GetType().FullName}");
     installer.Install(builder.Services, builder.Configuration);
 }
 

@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 
 namespace Modules.Users.Infrastructure;
-public sealed class ApplicationDbContext(DbContextOptions options) : DbContext(options), IUnitOfWork
+public sealed class UsersDbContext(DbContextOptions<UsersDbContext> options) : DbContext(options), IUnitOfWork
 {
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

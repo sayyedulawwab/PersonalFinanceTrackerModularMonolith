@@ -2,7 +2,7 @@
 using Modules.Users.Domain.Users;
 
 namespace Modules.Users.Infrastructure.Repositories;
-internal sealed class RefreshTokenRepository(ApplicationDbContext dbContext) : Repository<RefreshToken>(dbContext), IRefreshTokenRepository
+internal sealed class RefreshTokenRepository(UsersDbContext dbContext) : Repository<RefreshToken>(dbContext), IRefreshTokenRepository
 {
     public async Task<RefreshToken?> GetByTokenAsync(string token)
     {
