@@ -1,0 +1,28 @@
+{
+  "name": "Finance Tracker Dev",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "finance-tracker-api",
+  "workspaceFolder": "/workspace",
+
+  "forwardPorts": [8080, 8081, 5341, 8082],
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-dotnettools.csdevkit",
+        "ms-dotnettools.csharp",
+        "ms-azuretools.vscode-docker"
+      ],
+      "settings": {
+          "omnisharp.useModernNet": true,
+          "omnisharp.sdkPath": "/usr/share/dotnet",
+          "dotnet.defaultSdkVersion": "8.0.100",
+          "dotnet.enableSdkPreview": false
+      }
+    }
+  },
+
+  "postCreateCommand": "dotnet restore src/API/API.csproj",
+
+  "remoteUser": "root"
+}

@@ -30,7 +30,7 @@ COPY ["src/Modules/Users/Modules.Users.Domain/Modules.Users.Domain.csproj", "Mod
 COPY ["src/Modules/Accounts/Modules.Accounts.Infrastructure/Modules.Accounts.Infrastructure.csproj", "Modules/Accounts/Modules.Accounts.Infrastructure/"]
 COPY ["src/Modules/Accounts/Modules.Accounts.Application/Modules.Accounts.Application.csproj", "Modules/Accounts/Modules.Accounts.Application/"]
 COPY ["src/Modules/Accounts/Modules.Accounts.Domain/Modules.Accounts.Domain.csproj", "Modules/Accounts/Modules.Accounts.Domain/"]
-
+COPY src/API/appsettings.Development.json .
 # Restore dependencies
 RUN dotnet restore "./API/API.csproj"
 

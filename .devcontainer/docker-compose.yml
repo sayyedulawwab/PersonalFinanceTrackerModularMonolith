@@ -1,0 +1,44 @@
+version: '3.8'
+services:
+    database-postgres:
+        image: postgres:latest
+        container_name: database-postgres
+        environment:
+            - POSTGRES_DB=financeDB
+            - POSTGRES_USER=postgres
+            - POSTGRES_PASSWORD=postgres
+        networks:
+            - app-network
+        ports:
+            - 5432:5432
+
+    logging-seq:
+        image: datalust/seq:latest
+        container_name: logging-seq
+        environment:
+          - ACCEPT_EULA=Y
+        networks:
+          - app-network
+        ports:
+          - 5341:5341
+          - 8081:80
+
+    finance-tracker-api:
+      build:
+        context: ..
+        dockerfile: .devcontainer/Dockerfile
+      volumes:
+        - ..:/workspace:cached
+      networks:
+          - app-network
+      ports:
+        - "8080:8080"
+        - "8082:8082"
+      environment:
+        - DOTNET_ENVIRONMENT=Development
+      depends_on:
+        - database-postgres
+        - logging-seq
+networks:
+  app-network:
+    driver: bridge

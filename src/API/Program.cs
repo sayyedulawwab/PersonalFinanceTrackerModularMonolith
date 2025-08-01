@@ -12,6 +12,7 @@ using System.Reflection;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
+
 // Add services to the container.
 
 Assembly[] moduleAssemblies = new[]

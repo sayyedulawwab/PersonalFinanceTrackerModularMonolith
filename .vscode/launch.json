@@ -1,20 +1,29 @@
 {
+  "version": "0.2.0",
   "configurations": [
     {
-      "name": "Attach to Docker .NET Core App",
+      "name": ".NET Core Launch (API)",
       "type": "coreclr",
-      "request": "attach",
-      "processName": "dotnet",
+      "request": "launch",
+      "preLaunchTask": "build",
+      "program": "${workspaceFolder}/src/API/bin/Debug/net8.0/API.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}/src/API",
+      "stopAtEntry": false,
+      "serverReadyAction": {
+        "action": "openExternally",
+        "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+      },
       "pipeTransport": {
-        "pipeProgram": "docker",
-        "pipeArgs": [ "exec", "-i", "finance-tracker-api" ],
-        "debuggerPath": "/root/.vs-debugger/vsdbg",
-        "quoteArgs": false
+        "pipeProgram": "sh",
+        "pipeArgs": ["-c"],
+        "debuggerPath": "/vsdbg/vsdbg",
+        "pipeCwd": "${workspaceFolder}",
+        "quoteArgs": true
       },
-      "sourceFileMap": {
-        "/src": "${workspaceFolder}/src"
-      },
-      "justMyCode": false
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
     }
   ]
 }
