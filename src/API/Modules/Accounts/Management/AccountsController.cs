@@ -36,7 +36,7 @@ public class AccountsController : ControllerBase
 
 
     [MapToApiVersion(1)]
-    [HttpGet("accountId:guid")]
+    [HttpGet("{accountId:guid}")]
     public async Task<IActionResult> GetById(
         IQueryHandler<GetByIdAccountQuery, AccountResponse> handler,
         Guid accountId,
@@ -79,7 +79,7 @@ public class AccountsController : ControllerBase
     }
 
     [MapToApiVersion(1)]
-    [HttpPut("accountId:guid")]
+    [HttpPut("{accountId:guid}")]
     public async Task<IActionResult> Update(
         ICommandHandler<UpdateAccountCommand, Guid> handler,
         Guid accountId,
@@ -105,7 +105,7 @@ public class AccountsController : ControllerBase
 
 
     [MapToApiVersion(1)]
-    [HttpDelete("accountId:guid")]
+    [HttpDelete("{accountId:guid}")]
     public async Task<IActionResult> Delete(
         ICommandHandler<DeleteAccountCommand, Guid> handler,
         Guid accountId,

@@ -35,7 +35,7 @@ public class UsersController : ControllerBase
 
 
     [MapToApiVersion(1)]
-    [HttpGet("userId:guid")]
+    [HttpGet("{userId:guid}")]
     public async Task<IActionResult> GetById(
         IQueryHandler<GetByIdUserQuery, UserResponse> handler,
         Guid userId,
@@ -54,7 +54,7 @@ public class UsersController : ControllerBase
     }
 
     [MapToApiVersion(1)]
-    [HttpPut("userId:guid")]
+    [HttpPut("{userId:guid}")]
     public async Task<IActionResult> Update(
         ICommandHandler<UpdateUserCommand, Guid> handler,
         Guid userId,

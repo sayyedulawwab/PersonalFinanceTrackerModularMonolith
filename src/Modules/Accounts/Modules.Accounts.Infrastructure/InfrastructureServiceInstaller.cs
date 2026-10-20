@@ -28,7 +28,7 @@ public class InfrastructureServiceInstaller : IServiceInstaller
                     npgsqlOptions.MigrationsHistoryTable(HistoryRepository.DefaultTableName, "public"))
                 .UseSnakeCaseNamingConvention());
 
-        services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<AccountsDbContext>());
+        services.AddKeyedScoped<IUnitOfWork>("Accounts", (sp, _) => sp.GetRequiredService<AccountsDbContext>());
 
         services.AddScoped<IAccountRepository, AccountRepository>();
 

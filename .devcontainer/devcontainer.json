@@ -16,7 +16,7 @@
       "settings": {
           "omnisharp.useModernNet": true,
           "omnisharp.sdkPath": "/usr/share/dotnet",
-          "dotnet.defaultSdkVersion": "8.0.100",
+          "dotnet.defaultSdkVersion": "10.0.100",
           "dotnet.enableSdkPreview": false
       }
     }

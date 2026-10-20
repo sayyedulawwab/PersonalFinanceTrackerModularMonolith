@@ -1,4 +1,5 @@
-﻿using Common.Application.Abstractions.Messaging;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Common.Application.Abstractions.Messaging;
 using Common.Domain.Abstractions;
 using Modules.Users.Application.Abstractions.Authentication;
 using Modules.Users.Application.Auth.Register;
@@ -12,7 +13,7 @@ using System.Threading.Tasks;
 namespace Modules.Users.Application.Users.Update;
 public sealed class UpdateUserCommandHandler(
     IUserRepository userRepository,
-    IUnitOfWork unitOfWork,
+    [FromKeyedServices("Users")] IUnitOfWork unitOfWork,
     IDateTimeProvider dateTimeProvider)
     : ICommandHandler<UpdateUserCommand, Guid>
 {

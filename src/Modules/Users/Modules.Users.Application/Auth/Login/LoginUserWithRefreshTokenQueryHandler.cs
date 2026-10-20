@@ -1,4 +1,5 @@
-﻿using Common.Application.Abstractions.Messaging;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Common.Application.Abstractions.Messaging;
 using Common.Domain.Abstractions;
 using Modules.Users.Application.Abstractions.Authentication;
 using Modules.Users.Domain.Users;
@@ -6,7 +7,7 @@ using Modules.Users.Domain.Users;
 namespace Modules.Users.Application.Auth.Login;
 public sealed class LoginUserWithRefreshTokenQueryHandler(
     IRefreshTokenRepository refreshTokenRepository,
-    IUnitOfWork unitOfWork,
+    [FromKeyedServices("Users")] IUnitOfWork unitOfWork,
     ITokenProvider tokenProvider)
     : IQueryHandler<LoginUserWithRefreshTokenQuery, TokenResponse>
 {

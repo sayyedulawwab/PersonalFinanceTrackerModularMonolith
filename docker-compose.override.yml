@@ -3,9 +3,5 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=8080
-      - ASPNETCORE_HTTPS_PORTS=8082
     ports:
       - "8080:8080"
-      - "8082:8082"
-    volumes:
-      - ./src/API:/app

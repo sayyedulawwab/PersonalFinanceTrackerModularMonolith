@@ -1,11 +1,12 @@
 ﻿using Common.Application.Abstractions.Messaging;
+using Microsoft.Extensions.DependencyInjection;
 using Common.Domain.Abstractions;
 using Modules.Accounts.Domain.Accounts;
 
 namespace Modules.Accounts.Application.Accounts.Create;
 public sealed class CreateAccountCommandHandler(
     IAccountRepository accountRepository,
-    IUnitOfWork unitOfWork,
+    [FromKeyedServices("Accounts")] IUnitOfWork unitOfWork,
     IDateTimeProvider dateTimeProvider)
     : ICommandHandler<CreateAccountCommand, Guid>
 {

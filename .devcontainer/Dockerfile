@@ -1,5 +1,5 @@
-# Use official .NET 8 SDK image
-FROM mcr.microsoft.com/dotnet/sdk:8.0
+# Use official .NET 10 SDK image
+FROM mcr.microsoft.com/dotnet/sdk:10.0
 
 # Install dependencies
 RUN apt-get update \

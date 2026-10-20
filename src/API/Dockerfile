@@ -1,5 +1,5 @@
 # Base image for runtime
-FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
+FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS base
 WORKDIR /app
 EXPOSE 8080
 EXPOSE 8082
@@ -10,7 +10,7 @@ RUN apt-get update && apt-get install -y curl binutils \
     && curl -sSL https://aka.ms/getvsdbgsh | bash /dev/stdin -v latest -l /root/.vs-debugger
 
 # Build stage
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 ARG BUILD_CONFIGURATION=Debug
 ARG SOURCE_ROOT=/src
 

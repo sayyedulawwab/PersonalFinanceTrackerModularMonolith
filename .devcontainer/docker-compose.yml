@@ -17,6 +17,7 @@ services:
         container_name: logging-seq
         environment:
           - ACCEPT_EULA=Y
+          - SEQ_FIRSTRUN_NOAUTHENTICATION=true
         networks:
           - app-network
         ports:
@@ -36,6 +37,10 @@ services:
         - "8082:8082"
       environment:
         - DOTNET_ENVIRONMENT=Development
+        - ConnectionStrings__Database=Host=database-postgres;Port=5432;Database=financeDB;Username=postgres;Password=postgres;
+        - Seq__ServerUrl=http://logging-seq:5341
+        - Serilog__WriteTo__1__Args__serverUrl=http://logging-seq:5341
+        - Jwt__Secret=185C2E54-C194-4FC9-8B0D-B2C25FB577D3
       depends_on:
         - database-postgres
         - logging-seq

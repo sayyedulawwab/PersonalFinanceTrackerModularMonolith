@@ -1,7 +1,7 @@
 using API.Extensions;
 using Asp.Versioning;
 using Common.Infrastructure;
-using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi;
 using Modules.Accounts.Infrastructure;
 using Modules.Users.Infrastructure;
 using OpenTelemetry.Resources;
@@ -33,6 +33,7 @@ var installers = assemblies
             .SelectMany(a => a.GetTypes())
             .Where(t => typeof(IModuleInstaller).IsAssignableFrom(t) && !t.IsInterface && !t.IsAbstract)
             .Select(t => (IModuleInstaller)Activator.CreateInstance(t)!)
+            .OrderBy(i => i is CommonModuleInstaller) // Common last: its decorators need the handlers already registered
             .ToList();
 
 foreach (IModuleInstaller installer in installers)
@@ -56,20 +57,10 @@ builder.Services.AddSwaggerGen(option =>
             Scheme = "Bearer"
         });
 
-        option.AddSecurityRequirement(new OpenApiSecurityRequirement
-                {
-                    {
-                        new OpenApiSecurityScheme
-                        {
-                            Reference = new OpenApiReference
-                            {
-                                Type=ReferenceType.SecurityScheme,
-                                Id="Bearer"
-                            }
-                        },
-                        Array.Empty<string>()
-                    }
-                });
+        option.AddSecurityRequirement(document => new OpenApiSecurityRequirement
+        {
+            [new OpenApiSecuritySchemeReference("Bearer", document)] = []
+        });
 
     });
 
@@ -79,7 +70,7 @@ builder.Logging.ClearProviders();
 builder.Host.UseSerilog((context, loggerConfigruration) => loggerConfigruration.ReadFrom.Configuration(builder.Configuration)
     .WriteTo.OpenTelemetry(options =>
     {
-        options.Endpoint = "http://seq-logging:5341/ingest/otlp/v1/logs";
+        options.Endpoint = $"{builder.Configuration["Seq:ServerUrl"]}/ingest/otlp/v1/logs";
         options.Protocol = OtlpProtocol.HttpProtobuf;
         options.ResourceAttributes = new Dictionary<string, object>
         {
@@ -100,7 +91,6 @@ builder.Services.AddApiVersioning(options =>
 {
     options.DefaultApiVersion = new ApiVersion(1);
     options.ReportApiVersions = true;
-    options.AssumeDefaultVersionWhenUnspecified = true;
     options.ApiVersionReader = ApiVersionReader.Combine(
         new UrlSegmentApiVersionReader(),
         new HeaderApiVersionReader("X-Api-Version"));

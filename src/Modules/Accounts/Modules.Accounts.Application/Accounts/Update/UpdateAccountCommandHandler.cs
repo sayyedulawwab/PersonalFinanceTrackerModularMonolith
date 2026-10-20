@@ -1,4 +1,5 @@
 ﻿using Common.Application.Abstractions.Messaging;
+using Microsoft.Extensions.DependencyInjection;
 using Common.Domain.Abstractions;
 using Modules.Accounts.Application.Accounts.Create;
 using Modules.Accounts.Domain.Accounts;
@@ -6,7 +7,7 @@ using Modules.Accounts.Domain.Accounts;
 namespace Modules.Accounts.Application.Accounts.Update;
 public sealed class UpdateAccountCommandHandler(
     IAccountRepository accountRepository,
-    IUnitOfWork unitOfWork,
+    [FromKeyedServices("Accounts")] IUnitOfWork unitOfWork,
     IDateTimeProvider dateTimeProvider)
     : ICommandHandler<UpdateAccountCommand, Guid>
 {

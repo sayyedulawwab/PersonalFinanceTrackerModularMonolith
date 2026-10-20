@@ -11,8 +11,8 @@ public class UsersModuleInstaller : IModuleInstaller
     {
         Assembly[] assemblies = new[]
         {
-            AssemblyReference.Assembly,             // Common.Infrastructure
-            Application.AssemblyReference.Assembly  // Common.Application
+            AssemblyReference.Assembly,             // Infrastructure
+            Application.AssemblyReference.Assembly  // Application
         };
         var serviceInstallerTypes = assemblies
             .SelectMany(a => a.GetTypes())

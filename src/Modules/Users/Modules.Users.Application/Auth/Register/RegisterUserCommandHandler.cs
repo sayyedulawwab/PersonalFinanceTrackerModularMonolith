@@ -1,4 +1,5 @@
-﻿using Common.Application.Abstractions.Messaging;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Common.Application.Abstractions.Messaging;
 using Common.Domain.Abstractions;
 using Modules.Users.Application.Abstractions.Authentication;
 using Modules.Users.Domain.Users;
@@ -7,7 +8,7 @@ namespace Modules.Users.Application.Auth.Register;
 public sealed class RegisterUserCommandHandler(
     IPasswordHasher passwordHasher,
     IUserRepository userRepository,
-    IUnitOfWork unitOfWork,
+    [FromKeyedServices("Users")] IUnitOfWork unitOfWork,
     IDateTimeProvider dateTimeProvider)
     : ICommandHandler<RegisterUserCommand, Guid>
 {
